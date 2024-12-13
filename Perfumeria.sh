@@ -131,9 +131,7 @@ submenu() {
 			echo "1. Gestión de Procesos"
 			echo "2. Monitoreo de Memoria"
 			echo "3. Sincronización de Hilos"
-			echo "4. Simulación de FIFO y Multiprocesador"
-			echo "5. Gestión de Entrada/Salida"
-			echo "6. Sincronización entre Nodos"
+			echo "4. Gestión de Entrada/Salida"
 			read -p "Seleccione una opción: " subopcion
 			case $subopcion in
 				1)
@@ -146,13 +144,7 @@ submenu() {
 					ejecutar_script "$BASE_DIR/Scripts/sincronizacionHilos.sh"
 					;;
 				4)
-					ejecutar_script "$BASE_DIR/Scripts/planificacionProcesos.sh"
-					;;
-				5)
 					ejecutar_script "$BASE_DIR/Scripts/gestionEntradaSalida.sh"
-					;;
-				6)
-					ejecutar_script "$BASE_DIR/Scripts/sistemasDistribuidos.sh"
 					;;
 				*)
 					echo "Opción no válida."
