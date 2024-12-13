@@ -1,11 +1,14 @@
 #!/bin/bash
 
-UMBRAL=80
+UMBRAL=80  # Definir umbral de alerta
 
-USO_MEMORIA=$(free | grep Mem | awk '{print $3/$2 * 100.0}')
+# Obtener el uso de memoria como porcentaje
+USO_MEMORIA=$(free | awk '/Mem/ {printf "%.2f", $3/$2 * 100}')
 
+# Verificar si el uso de memoria supera el umbral
 if (( $(echo "$USO_MEMORIA > $UMBRAL" | bc -l) )); then
-	echo "ALERTA: Uso de memoria ha superado el umbral de $UMBRAL%, Uso actual: $USO_MEMORIA%"
+    echo "ALERTA: Uso de memoria ($USO_MEMORIA%) ha superado el umbral ($UMBRAL%)."
+    echo "$(date): ALERTA - Uso de memoria: $USO_MEMORIA%" >> "$BASE_DIR/Logs/logs.txt"
 else
-	echo "Uso de la memoria dentro de los limites: $USO_MEMORIA"
+    echo "Uso de memoria dentro de límites: $USO_MEMORIA%"
 fi

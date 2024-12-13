@@ -1,18 +1,12 @@
 #!/bin/bash
 
-
 LOCK_FILE="/tmp/locks.txt"
 
-
-#Se adquiere el lock
-flock -n "$LOCK_FILE" || { echo "No se pudo optener el lock"; exit 1; }
-
-
-
-echo "Haciendo una operacion critica..."
-sleep 10
-
-
-flock -u "$LOCK_FILE"
-
-echo "Operacion critica completada"
+# Intentar adquirir el bloqueo
+if flock -n "$LOCK_FILE" -c "sleep 10"; then
+    echo "Operación crítica completada correctamente."
+    echo "$(date): Operación crítica realizada" >> "$BASE_DIR/Logs/logs.txt"
+else
+    echo "No se pudo obtener el bloqueo. Otro proceso está trabajando."
+    echo "$(date): ERROR - Operación crítica no pudo completarse" >> "$BASE_DIR/Logs/logs.txt"
+fi

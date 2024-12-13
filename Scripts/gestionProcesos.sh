@@ -1,22 +1,25 @@
 #!/bin/bash
 
-
-#Se inicia un nuevo proceso
+# Crear un proceso en segundo plano
 sleep 60 &
-echo "Se inicio un nuevo proceso (PID $!)"
+PID=$!
+echo "Se inició un nuevo proceso en segundo plano (PID: $PID)"
 
+# Verificar el estado del proceso
+if ps -p $PID > /dev/null; then
+    echo "El proceso con PID $PID está en ejecución."
+else
+    echo "El proceso con PID $PID no se encuentra activo."
+fi
 
-#Se verifica cual es el PID del proceso que se inicio
-PID=$(ps -ef | grep sleep | awk '{print $2}')
-echo "El procesos tiene el PID: $PID"
+# Ajustar la prioridad del proceso
+renice -n 5 -p $PID > /dev/null 2>&1
+echo "Se cambió la prioridad del proceso con PID: $PID a 5."
 
-
-#Termina el proceso
+# Terminar el proceso
 kill $PID
-echo "Se termino el proceso con el PID: $PID"
-
-
-#Se ajusta la prioridad del proceso
-renice -n 5 -p $PID
-echo "Se cambio la prioridad del proceso con PID: $PID"
-
+if [[ $? -eq 0 ]]; then
+    echo "El proceso con PID $PID fue terminado exitosamente."
+else
+    echo "No se pudo terminar el proceso con PID $PID."
+fi
