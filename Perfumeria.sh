@@ -181,7 +181,7 @@ while true; do
 	echo "7. Salir"
 	read -p "Seleccione una opcion: " opcion
 
-	if [[ $opcion -ge 1 && $opcion -le 5 ]]; then
+	if [[ $opcion -ge 1 && $opcion -le 6 ]]; then
 		submenu $opcion
 	elif [[ $opcion -eq 7 ]]; then
 		echo ""
