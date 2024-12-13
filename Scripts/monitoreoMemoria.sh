@@ -1,23 +1,11 @@
 #!/bin/bash
 
-# Monitoreo de memoria con vmstat
-echo "Monitoreando uso de memoria..."
-vmstat 1 5
+UMBRAL=80
 
-# Ajustar parámetros del kernel
-echo "Optimizando parámetros de memoria..."
-sudo sysctl -w vm.swappiness=10  # Reducir uso de swap
-sudo sysctl -w vm.dirty_ratio=15  # Limitar memoria para escritura diferida
+USO_MEMORIA=$(free | grep Mem | awk '{print $3/$2 * 100.0}')
 
-# Verificar espacio de swap
-echo "Estado actual del espacio de swap:"
-free -h
-
-# Generar alerta si el uso de swap supera el 50%
-USO_SWAP=$(free | awk '/Swap/ {printf "%.2f", $3/$2 * 100}')
-if (( $(echo "$USO_SWAP > 50.0" | bc -l) )); then
-    echo "ALERTA: Uso de swap es superior al 50% ($USO_SWAP%)."
-    echo "$(date): ALERTA - Uso de swap $USO_SWAP%" >> "$BASE_DIR/Logs/logs.txt"
+if (( $(echo "$USO_MEMORIA > $UMBRAL" | bc -l) )); then
+	echo "ALERTA: Uso de memoria ha superado el umbral de $UMBRAL%, Uso actual: $USO_MEMORIA%"
 else
-    echo "Uso de swap dentro de los límites ($USO_SWAP%)."
+	echo "Uso de la memoria dentro de los limites: $USO_MEMORIA"
 fi
