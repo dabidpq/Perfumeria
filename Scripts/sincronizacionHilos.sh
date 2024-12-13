@@ -10,3 +10,5 @@ else
     echo "No se pudo obtener el bloqueo. Otro proceso está trabajando."
     echo "$(date): ERROR - Operación crítica no pudo completarse" >> "$BASE_DIR/Logs/logs.txt"
 fi
+
+#sisisisisisisisisisissisi
