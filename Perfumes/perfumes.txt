@@ -1,0 +1,5 @@
+JPG,120
+Chanel_No.5_Eau_de_Parfum,135
+Dior_Sauvage_Eau_de_Toilette,100
+Versace_Eros_Eau_de_Toilette,95
+a,a
