@@ -124,6 +124,30 @@ submenu() {
 					;;
 			esac
 			;;
+
+		6)
+			echo ""
+			echo "===== Submenú Gestión del Sistema ====="
+			echo "1. Gestión de Procesos"
+			echo "2. Monitoreo de Memoria"
+			echo "3. Sincronización de Hilos"
+			read -p "Seleccione una opción: " subopcion
+			case $subopcion in
+				1)
+					ejecutar_script "$BASE_DIR/Scripts/gestionProcesos.sh"
+					;;
+				2)
+					ejecutar_script "$BASE_DIR/Scripts/monitoreoMemoria.sh"
+					;;
+				3)
+					ejecutar_script "$BASE_DIR/Scripts/sincronizacionHilos.sh"
+					;;
+				*)
+					echo "Opción no válida."
+					;;
+			esac
+			;;
+
 		*)
 			echo "Opcion no valida"
 			;;
@@ -141,12 +165,13 @@ while true; do
 	echo "3. Perfumes"
 	echo "4. Proveedores"
 	echo "5. Puntos de Venta"
-	echo "6. Salir"
+	echo "6. Gestion del Sistema"
+	echo "7. Salir"
 	read -p "Seleccione una opcion: " opcion
 
 	if [[ $opcion -ge 1 && $opcion -le 5 ]]; then
 		submenu $opcion
-	elif [[ $opcion -eq 6 ]]; then
+	elif [[ $opcion -eq 7 ]]; then
 		echo ""
 		echo "Salinedo del programa..."
 		break
@@ -156,7 +181,7 @@ while true; do
 	fi
 done
 
-
+#hola
 
 
 
